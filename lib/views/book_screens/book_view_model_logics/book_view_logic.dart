@@ -4,6 +4,7 @@ import '../book_model/search_model.dart';
 import '../books_provider/search_provider.dart';
 
 class BooksViewModel extends ChangeNotifier {
+
   final BookProvider _bookProvider;
   final DatabaseHelper _dbHelper = DatabaseHelper();
 
@@ -13,7 +14,9 @@ class BooksViewModel extends ChangeNotifier {
   bool _isLoading = false;
 
   BooksViewModel(this._bookProvider) {
-    fetchBooks();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      fetchBooks();
+    });
   }
 
   List<Items> get allBooks => _allBooks;

@@ -4,8 +4,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:go_router/go_router.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,20 +31,17 @@ void main() async {
   runApp(
     MultiProvider(
       providers: AppAllProviders.appAllProviders,
-      child:  MyApp(),
+      child: MyApp(),
     ),
   );
 }
 
-
 class MyApp extends StatefulWidget {
-
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-
   late ConnectivityService _connectivityService;
   bool _hasInternet = true;
 
@@ -69,56 +64,52 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeChangerProvider>(context);
+    final themeProvider = context.watch<ThemeChangerProvider>(); // Listen for changes
+
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
-      child: MultiProvider(
-        providers: AppAllProviders.appAllProviders,
-        child: Platform.isIOS ?  CupertinoApp.router(
-            theme: CupertinoThemeData(
-              brightness: themeProvider.themeMode == ThemeMode.dark
-                  ? Brightness.dark
-                  : Brightness.light,
-            ),
-            debugShowCheckedModeBanner: false,
-            title: 'Flutter Demo',
-            routerDelegate: AppRoute.router.routerDelegate,
-            routeInformationProvider: AppRoute.router.routeInformationProvider,
-            routeInformationParser: AppRoute.router.routeInformationParser,
-
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-
-          ):
-            GetMaterialApp.router(
-              themeMode:Provider.of<ThemeChangerProvider>(context).themeMode,
-              theme: ThemeData.light(),
-              darkTheme: ThemeData.dark(),
-              debugShowCheckedModeBanner: false,
-              title: 'Flutter Demo',
-              routerDelegate: AppRoute.router.routerDelegate,
-              routeInformationProvider: AppRoute.router.routeInformationProvider,
-              routeInformationParser: AppRoute.router.routeInformationParser,
-              localizationsDelegates: [
-                AppLocalizations.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-              ],
-              builder: (context, child) {
-                if (!_hasInternet) {
-                  return NoInternetScreen();
-                }
-                return child!;
-              }
-              )
-
+      child: Platform.isIOS
+          ? CupertinoApp.router(
+        theme: CupertinoThemeData(
+          brightness: themeProvider.themeMode == ThemeMode.dark
+              ? Brightness.dark
+              : Brightness.light,
+        ),
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        routerDelegate: AppRoute.router.routerDelegate,
+        routeInformationProvider: AppRoute.router.routeInformationProvider,
+        routeInformationParser: AppRoute.router.routeInformationParser,
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+      )
+          : GetMaterialApp.router(
+        themeMode: themeProvider.themeMode, // Now it updates in real time
+        theme: ThemeData.light(),
+        darkTheme: ThemeData.dark(),
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        routerDelegate: AppRoute.router.routerDelegate,
+        routeInformationProvider: AppRoute.router.routeInformationProvider,
+        routeInformationParser: AppRoute.router.routeInformationParser,
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        builder: (context, child) {
+          if (!_hasInternet) {
+            return NoInternetScreen();
+          }
+          return child!;
+        },
       ),
     );
   }

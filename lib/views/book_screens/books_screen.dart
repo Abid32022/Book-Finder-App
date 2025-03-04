@@ -14,7 +14,7 @@ class BooksScreen extends StatelessWidget {
       child: Consumer<BooksViewModel>(
         builder: (context, viewModel, child) {
           return Scaffold(
-            appBar: AppBar(title: const Text("Search Books")),
+            appBar: AppBar(title: const Text("Search Books",)),
             body: viewModel.isLoading
                 ? const Center(
               child: SpinKitWaveSpinner(color: Colors.blue, size: 50),
@@ -43,61 +43,91 @@ class BooksScreen extends StatelessWidget {
                             fontSize: 18, color: Colors.white),
                       ),
                     )
-                        : ListView.builder(
+                    :ListView.builder(
                       itemCount: viewModel.foundBooks.length,
                       itemBuilder: (context, index) {
                         final book = viewModel.foundBooks[index];
                         final bookInfo = book.volumeInfo;
-                        final isFavorite =
-                            viewModel.favoriteStatus[book.id!] ??
-                                false;
+                        final isFavorite = viewModel.favoriteStatus[book.id!] ?? false;
 
                         return Card(
                           key: ValueKey(book.id),
-                          color: Colors.blue,
-                          elevation: 4,
-                          margin: const EdgeInsets.symmetric(
-                              vertical: 10),
-                          child: ListTile(
-                            leading: bookInfo
-                                ?.imageLinks?.thumbnail !=
-                                null
-                                ? Image.network(
-                              bookInfo!.imageLinks!
-                                  .thumbnail!,
-                              width: 50,
-                              height: 50,
-                              fit: BoxFit.cover,
-                            )
-                                : const Icon(Icons.book,
-                                size: 50, color: Colors.white),
-                            title: Text(
-                              bookInfo?.title ?? "No Title",
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20),
-                            ),
-                            subtitle: Text(
-                              bookInfo?.authors?.join(', ') ??
-                                  "Unknown Author",
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16),
-                            ),
-                            trailing: IconButton(
-                              icon: Icon(
-                                isFavorite
-                                    ? Icons.favorite
-                                    : Icons.favorite_border,
-                                color: Colors.red,
+                          elevation: 6,
+                          margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16), // Rounded edges
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              gradient: const LinearGradient(
+                                colors: [Color(0xFF1E3C72), Color(0xFF2A5298)], // Beautiful gradient
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
                               ),
-                              onPressed: () =>
-                                  viewModel.toggleFavorite(book),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 8,
+                                  spreadRadius: 2,
+                                  offset: Offset(2, 4),
+                                ),
+                              ],
+                            ),
+                            child: ListTile(
+                              contentPadding: const EdgeInsets.all(12),
+                              leading: ClipRRect(
+                                borderRadius: BorderRadius.circular(12), // Rounded image corners
+                                child: bookInfo?.imageLinks?.thumbnail != null
+                                    ? Image.network(
+                                  bookInfo!.imageLinks!.thumbnail!,
+                                  width: 60,
+                                  height: 80,
+                                  fit: BoxFit.cover,
+                                )
+                                    : Container(
+                                  width: 60,
+                                  height: 80,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white24,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: const Icon(Icons.book, size: 40, color: Colors.white),
+                                ),
+                              ),
+                              title: Text(
+                                bookInfo?.title ?? "No Title",
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              subtitle: Padding(
+                                padding: const EdgeInsets.only(top: 5),
+                                child: Text(
+                                  bookInfo?.authors?.join(', ') ?? "Unknown Author",
+                                  style: const TextStyle(
+                                    color: Colors.white70,
+                                    fontSize: 14,
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                                ),
+                              ),
+                              trailing: IconButton(
+                                icon: Icon(
+                                  isFavorite ? Icons.favorite : Icons.favorite_border,
+                                  color: isFavorite ? Colors.red : Colors.white70,
+                                  size: 28,
+                                ),
+                                onPressed: () => viewModel.toggleFavorite(book),
+                              ),
                             ),
                           ),
                         );
                       },
                     ),
+
                   ),
                 ],
               ),

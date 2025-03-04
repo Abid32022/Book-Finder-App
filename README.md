@@ -56,3 +56,5 @@ Displays a "No results found" message if no books match the search.
 Contributions are welcome! Feel free to open a pull request.
 
 
+Flutter 3.27.0
+Dart 3.6.0
