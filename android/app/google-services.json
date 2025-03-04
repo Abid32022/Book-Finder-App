@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "875938592945",
+    "project_id": "universe-fa181",
+    "storage_bucket": "universe-fa181.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875938592945:android:4d2e03eff2a804f976ca90",
+        "android_client_info": {
+          "package_name": "com.android.application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA36knqO9Lng7LUmxSKnRHfY8Rz3hcsb-k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875938592945:android:7ad7f96c56eb4f7076ca90",
+        "android_client_info": {
+          "package_name": "com.example.my_qurbani"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA36knqO9Lng7LUmxSKnRHfY8Rz3hcsb-k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875938592945:android:544b06117a009d3776ca90",
+        "android_client_info": {
+          "package_name": "com.techfista.my_qurbani"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA36knqO9Lng7LUmxSKnRHfY8Rz3hcsb-k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
